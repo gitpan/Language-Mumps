@@ -100,7 +100,9 @@ Edit your ~/.pmumps or /etc/pmumps.cf to enable persistent databases.
  
 =head1 AUTHOR
 
-Ariel Brosh, B<schop@cpan.org>
+Ariel Brosh.
+
+Maintained by Steffen Mueller (mumps-module at steffen-mueller dot net).
 
 =head1 SEE ALSO
 

@@ -1,14 +1,14 @@
 # PerlMUMPS by Ariel Brosh
 # Usage is free, including commercial use, enterprise and legacy use
-# However, any modifications should be notified to the author
-# Email: mumps@atheist.org.il
+# However, any modifications should be notified to the maintainer
+# Email: mumps-module at steffen-mueller dot net
 
 # Note:
 # This compiler parses and generates in the same phase, therefore is not
 # very maintainable
 
 package Language::Mumps;
-$VERSION = 1.06;
+$VERSION = 1.07;
 use Fcntl;
 use strict vars;
 use vars qw($FETCH $STORE $DB $SER $IMPORT @TYING $xpos $ypos
@@ -2728,8 +2728,11 @@ Edit ~/.pmumps or /etc/pmumps to set up persistent arrays.
 
 =head1 AUTHOR
 
-Ariel Brosh, B<schop@cpan.org>
+Ariel Brosh.
+
+Maintained by Steffen Mueller (mumps-module at steffen-mueller dot net).
 
 =head1 SEE ALSO
 
 L<pmumps>, L<DB_File>.  
+

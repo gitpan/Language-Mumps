@@ -1,5 +1,9 @@
 Revision history for Perl extension Mumps.
 
+1.07  Thu Jan 30 21:37:21 2003
+	- No conceptual changes. New maintainer and hence new
+	  address for bugs and comments.
+
 0.01  Thu May 11 13:25:38 2000
 	- original version; created by h2xs 1.19
 
