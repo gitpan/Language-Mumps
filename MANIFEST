@@ -1,0 +1,10 @@
+README
+Changes
+MANIFEST
+Makefile.PL
+Mumps.pm
+test.pl
+mumps.cfg
+pmumps.PL
+examples/db.mps 
+examples/fibonaci.mps
