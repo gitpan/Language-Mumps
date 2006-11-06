@@ -1,3 +1,4 @@
+#!perl
 my $script = <<'END_OF_SCRIPT';
 ~startperl~
 
@@ -100,9 +101,17 @@ Edit your ~/.pmumps or /etc/pmumps.cf to enable persistent databases.
  
 =head1 AUTHOR
 
-Ariel Brosh.
+Ariel Brosh
 
-Maintained by Steffen Mueller (mumps-module at steffen-mueller dot net).
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2000, Ariel Brosh.
+
+Maintained by Steffen Mueller E<lt>smueller@cpan.orgE<gt>.
+
+Usage of this module is free, including commercial use, enterprise
+and legacy use. However, any modifications should be notified to
+the maintainer.
 
 =head1 SEE ALSO
 

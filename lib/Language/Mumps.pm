@@ -1,16 +1,16 @@
 # PerlMUMPS by Ariel Brosh
 # Usage is free, including commercial use, enterprise and legacy use
 # However, any modifications should be notified to the maintainer
-# Email: mumps-module at steffen-mueller dot net
+# Email: smueller@cpan.org
 
 # Note:
 # This compiler parses and generates in the same phase, therefore is not
 # very maintainable
 
 package Language::Mumps;
-$VERSION = 1.07;
+$VERSION = '1.08';
 use Fcntl;
-use strict vars;
+use strict;
 use vars qw($FETCH $STORE $DB $SER $IMPORT @TYING $xpos $ypos
   %symbols $selected_io $flag @handlers @xreg @yreg
   $curses_inside $varstack %RES $RESKEYS %COMMANDS $scope_do
@@ -278,7 +278,7 @@ $code
 
 1;
 EOM
-    close(o);
+    close(O);
 }
 
 ####
@@ -1385,7 +1385,7 @@ sub resetvars {
 sub curse {
     require Curses;
     return undef unless (*Curses::new{CODE});
-    Curses::initscr unless ($curses_inside++);
+    Curses::initscr() unless ($curses_inside++);
     1;
 }
 
@@ -1395,7 +1395,7 @@ sub curse {
 sub cls {
     if ($Language::Mumps::selected_io == 5) {
         &curse;
-        Curses::clear;
+        Curses::clear();
     } else {
         &write("\l");
     }
@@ -1407,7 +1407,7 @@ sub cls {
 
 sub readkey {
     &curse;
-    Curses::getch;
+    Curses::getch();
 }
 
 ####
@@ -1529,7 +1529,7 @@ sub import {
             $FETCH = sub { 
                 my $xml = shift;
                 return undef unless ($xml);
-                my $parser = new XML::Parser(Style => Tree);
+                my $parser = new XML::Parser(Style => 'Tree');
                 my $tree = $parser->parse($xml);
                 $Language::Mumps::Pool::XML->xml2pl($tree); };
             $STORE = sub { $Language::Mumps::Pool::XML->pl2xml(shift); };
@@ -1538,7 +1538,7 @@ sub import {
             $@ = undef;
             eval "require Data::DumpXML; import Data::DumpXML;";
             eval "require Data::DumpXML::Parser; import Data::DumpXML::Parser;";
-            $Language::Mumps::Pool::XML = Data::DumpXML::Parser;
+            $Language::Mumps::Pool::XML = Data::DumpXML::Parser->new();
             die $@ if ($@);
             $STORE = \&Data::DumpXML::dump_xml;
             $FETCH = sub { $Language::Mumps::Pool::XML->parse(@_); };
@@ -1555,7 +1555,7 @@ sub import {
         }
     }
 # Save DBM and serializer choice
-    $IMPORT = join(" ", grep /./, ($DB, $SER));
+    $IMPORT = join(" ", grep /./, grep {defined}($DB, $SER));
 }
 
 ####
@@ -2481,7 +2481,7 @@ sub ZD9 {
 ## which is equal to the row number.
 
 sub ZDBI {
-    my ($dsn, $u, $p, $query, $ary) = 2_;
+    my ($dsn, $u, $p, $query, $ary) = @_;
     require DBI;
     import DBI;
     my $dbh = DBI->connect($dsn, $u, $p);
@@ -2684,22 +2684,24 @@ __END__
 
 __END__
 # Documentation
+
 =head1 NAME
 
-Mumps - Perl module to translate Mumps programs to perl scripts
+Language::Mumps - Perl module to translate Mumps programs to perl scripts
 
 =head1 SYNOPSIS
 
-use Language::Mumps;
+  use Language::Mumps;
+  
+  $pcode = Language::Mumps::compile(qq{\tw "Hello world!",!\n\th});
+  eval $pcode;
+  
+  Language::Mumps::evaluate(qq{\ts x=1 w x});
+  
+  Language::Mumps::interprete("example.mps");
+  
+  Mumps:translate("example.mps", "example.pl");
 
-$pcode = Language::Mumps::compile(qq{\tw "Hello world!",!\n\th});
-eval $pcode;
-
-Language::Mumps::evaluate(qq{\ts x=1 w x});
-
-Language::Mumps::interprete("example.mps");
-
-Mumps:translate("example.mps", "example.pl");
 B<prompt %> C<perl example.pl>
 
 =head1 DESCRIPTION
@@ -2730,7 +2732,15 @@ Edit ~/.pmumps or /etc/pmumps to set up persistent arrays.
 
 Ariel Brosh.
 
-Maintained by Steffen Mueller (mumps-module at steffen-mueller dot net).
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2000, Ariel Brosh.
+
+Maintained by Steffen Mueller
+
+Usage of this module is free, including commercial use, enterprise
+and legacy use. However, any modifications should be notified to
+the maintainer.
 
 =head1 SEE ALSO
 
